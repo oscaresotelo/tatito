@@ -21,8 +21,8 @@ def insertar_proveedor(nombre, contacto):
     conn.commit()
 
 # Streamlit
-st.title("Carga de Proveedores")
 
+st.markdown("<h1 style='text-align: center; color: red;'>CARGAR PROVEEDORES</h1>", unsafe_allow_html=True)
 nombre_proveedor = st.text_input("Nombre del Proveedor:")
 contacto = st.text_input("Contacto:")
 

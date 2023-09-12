@@ -1,8 +1,8 @@
 import streamlit as st
 from st_pages import Page, show_pages, add_page_title
 
-st.title("SISTEMA DE CONTROL DE INVENTARIO")
 
+st.markdown("<h1 style='text-align: center; color: red;'>SISTEMA DE CONTROL DE INVENTARIO</h1>", unsafe_allow_html=True)
 show_pages([
     Page("main.py", "Inicio"),
     Page("cargaproductos.py", "Cargar Productos"),

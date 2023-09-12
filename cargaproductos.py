@@ -4,7 +4,7 @@ import sqlite3
 # Conectar a la base de datos SQLite
 conn = sqlite3.connect('inventario.db')
 c = conn.cursor()
-
+st.markdown("<h1 style='text-align: center; color: red;'>INGRESAR PRODUCTOS</h1>", unsafe_allow_html=True)
 # Crear la tabla Productos si no existe
 c.execute('''
     CREATE TABLE IF NOT EXISTS Productos (
@@ -42,8 +42,8 @@ def insertar_producto(nombre, descripcion, precio_compra, precio_venta, categori
 
 # Crear la aplicación Streamlit
 def main():
-    st.title('Ingreso de Productos')
-
+   
+  
     # Obtener las categorías disponibles
     categorias = obtener_categorias()
     nombres_categorias = [categoria[1] for categoria in categorias]

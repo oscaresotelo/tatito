@@ -6,8 +6,8 @@ conn = sqlite3.connect("inventario.db")
 cur = conn.cursor()
 
 # Definir el título de la aplicación
-st.title("Cargar categorías")
 
+st.markdown("<h1 style='text-align: center; color: red;'>CARGAR CATEGORIAS</h1>", unsafe_allow_html=True)
 # Crear un control de entrada de texto para el nombre de la categoría
 nombre_categoria = st.text_input("Nombre de la categoría:")
 
