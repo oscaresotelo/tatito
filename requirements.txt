@@ -36,8 +36,7 @@ six==1.16.0
 smmap==5.0.0
 st-pages==0.4.4
 streamlit==1.26.0
-streamlit-back-camera-input==0.1.1
-streamlit-qrcode-scanner==0.1.2
+streamlit-back-camera-input
 tenacity==8.2.3
 toml==0.10.2
 toolz==0.12.0
