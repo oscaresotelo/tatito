@@ -111,7 +111,7 @@ conn.commit()
 st.markdown("<h1 style='text-align: center; color: red;'>Registro de Movimientos de Inventario</h1>", unsafe_allow_html=True)
 # Formulario para ingresar datos de movimiento
 st.write('### Ingrese los datos del movimiento:')
-cursor.execute("SELECT ID_Producto, Nombre FROM Productos")
+cursor.execute("SELECT Codigo, Nombre FROM Productos")
 productos = cursor.fetchall()
 producto_dict = {row[0]: row[1] for row in productos}
 id_productos = st.multiselect('Nombre del Producto', list(producto_dict.values()))
@@ -132,22 +132,22 @@ if st.button('Agregar Movimiento'):
             id_producto = next((k for k, v in producto_dict.items() if v == id_producto_seleccionado), None)
             if id_producto is not None:
                 cursor.execute('''
-                    INSERT INTO Movimientos_inventario (ID_Producto, Tipo_Movimiento, Cantidad_Movida, Fecha_Hora_Movimiento, Usuario, Razon_Movimiento)
+                    INSERT INTO Movimientos_inventario (Codigo, Tipo_Movimiento, Cantidad_Movida, Fecha_Hora_Movimiento, Usuario, Razon_Movimiento)
                     VALUES (?, ?, ?, ?, ?, ?)
-                ''', (id_producto, tipo_movimiento, cantidad_movida, fecha_hora_movimiento, usuario, razon_movimiento))
+                ''', (Codigo, tipo_movimiento, cantidad_movida, fecha_hora_movimiento, usuario, razon_movimiento))
                 
                 # Actualizar el inventario
                 if tipo_movimiento == 'ENTRADA':
                     cursor.execute('''
                         UPDATE Inventario
                         SET Cantidad_Stock = Cantidad_Stock + ?
-                        WHERE ID_Producto = ?
+                        WHERE Codigo = ?
                     ''', (cantidad_movida, id_producto))
                 elif tipo_movimiento == 'SALIDA':
                     cursor.execute('''
                         UPDATE Inventario
                         SET Cantidad_Stock = Cantidad_Stock - ?
-                        WHERE ID_Producto = ?
+                        WHERE Codigo = ?
                     ''', (cantidad_movida, id_producto))
                     
                 conn.commit()
@@ -162,7 +162,7 @@ st.write('### Movimientos de Inventario:')
 cursor.execute('''
     SELECT MI.ID_Movimiento, P.Nombre, MI.Tipo_Movimiento, MI.Cantidad_Movida, MI.Fecha_Hora_Movimiento, MI.Usuario, MI.Razon_Movimiento
     FROM Movimientos_inventario MI
-    JOIN Productos P ON MI.ID_Producto = P.ID_Producto
+    JOIN Productos P ON MI.Codigo = P.Codigo
 ''')
 movimientos = cursor.fetchall()
 

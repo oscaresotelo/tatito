@@ -50,6 +50,7 @@ def main():
 
     # Formulario para ingresar un nuevo producto
     st.header('Nuevo Producto')
+    codigo = st.number_input("Ingreso Codigo")
     nombre = st.text_input('Nombre del Producto')
     descripcion = st.text_area('Descripción')
     precio_compra = st.number_input('Precio de Compra', step=0.01)
@@ -63,7 +64,7 @@ def main():
         categoria_id = categorias[nombres_categorias.index(categoria)][0]
 
         # Insertar el producto en la base de datos
-        insertar_producto(nombre, descripcion, precio_compra, precio_venta, categoria_id, proveedor, unidad_medida)
+        insertar_producto(codigo,nombre, descripcion, precio_compra, precio_venta, categoria_id, proveedor, unidad_medida)
 
         # Mostrar el producto ingresado
         st.success(f'Producto Guardado: {nombre}, Categoría: {categoria}')
