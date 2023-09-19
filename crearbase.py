@@ -68,7 +68,7 @@
 # conn.close()
 
 # print("Las tablas se han creado correctamente en la base de datos SQLite3.")
-import sqlite3
+""" import sqlite3
 
 # Nombre de la base de datos SQLite
 database_name = "inventario.db"
@@ -96,3 +96,25 @@ finally:
     # Cerrar la conexión a la base de datos, independientemente de si se produjo un error o no
     if conn:
         conn.close()
+ """
+
+import sqlite3
+
+# Conectarse a la base de datos
+conexion = sqlite3.connect('inventario.db')
+cursor = conexion.cursor()
+
+# Consultar todos los registros de la tabla Usuarios
+cursor.execute("SELECT * FROM Usuarios")
+usuarios = cursor.fetchall()
+
+# Cerrar la conexión a la base de datos
+conexion.close()
+
+# Mostrar los datos en forma de tabla o lista
+if usuarios:
+    # Puedes mostrar los datos en forma de tabla
+    for usuario in usuarios:
+        print(f"Usuario: {usuario[0]}, Password: {usuario[1]}, Nivel: {usuario[2]}")
+else:
+    print("No hay usuarios en la base de datos.")
