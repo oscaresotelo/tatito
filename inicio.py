@@ -18,7 +18,7 @@ hide_st_style = """
             }
             .logo-text {
                 font-weight:700 !important;
-                font-size:50px !important;
+                font-size:30px !important;
                 color: black !important;
                 padding-top: 50px !important;
             }
@@ -34,15 +34,13 @@ st.markdown(hide_st_style,
 st.markdown(
     f"""
     <div class="container">
-        <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}">
-        <p class="logo-text">Movimiento de Inventario</p>
+        <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}" > <br>
+        <p class="logo-text">Movimiento <br> de Inventario</p>
     </div>
     """,
     unsafe_allow_html=True
 )
-# if st.session_state.usuario != "":
-#   if st.button("Salir"):
-#       del st.session_state.usuario
+
 if "ingreso" not in st.session_state:
       st.session_state.ingreso = ""
 
@@ -51,8 +49,8 @@ def login():
     
     st.success("Bienvenido!")
     show_pages([
-              Page("inicio.py", "Inicio", ":notebook:"),
-              Page("camara.py", "Carga", ":notebook:"),
+              Page("inicio.py", "Inicio" ),
+              Page("completo.py", "Cargar"),
               
 
           ])
@@ -93,4 +91,3 @@ else:
 
         # Add a submit button
        
-        
