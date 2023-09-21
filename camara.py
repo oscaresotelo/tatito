@@ -4,6 +4,31 @@ import sqlite3
 from streamlit_qrcode_scanner import qrcode_scanner
 import datetime
 
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+                     .container {
+                display: flex;
+            }
+            .logo-text {
+                font-weight:700 !important;
+                font-size:30px !important;
+                color: black !important;
+                padding-top: 50px !important;
+            }
+            .logo-img {
+                float:right;
+            }
+            </style>
+            """
+st.markdown(hide_st_style, 
+
+    unsafe_allow_html=True)
+
+    
+
 st.markdown("<h1 style='text-align: center; color: red;'>Registro de Movimientos de Inventario</h1>", unsafe_allow_html=True)
 # Función para buscar en la base de datos
 if "ingreso" not in st.session_state:

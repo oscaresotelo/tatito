@@ -50,7 +50,10 @@ def login():
     st.success("Bienvenido!")
     show_pages([
               Page("inicio.py", "Inicio" ),
-              Page("completo.py", "Cargar"),
+              Page("completo.py", "Cargar Movimientos"),
+              Page("faltante.py", "Parametros de Productos"),
+              Page("tablero.py", "Tablero de Faltante"),
+              Page("consulta.py", "Consulta de Stock"),
               
 
           ])
