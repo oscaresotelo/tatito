@@ -44,6 +44,10 @@ st.markdown(
 if "ingreso" not in st.session_state:
       st.session_state.ingreso = ""
 
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
 def login():
     st.session_state.ingreso = "ok"
     
@@ -93,4 +97,4 @@ else:
         st.error("Usuario o Contraseña Incorrecta")
 
         # Add a submit button
-       
+local_css("estilos.css")      

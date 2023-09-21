@@ -27,6 +27,10 @@ st.markdown(hide_st_style,
 
     unsafe_allow_html=True)
 
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+local_css("estilos.css")
 
 
 # Función para conectar a la base de datos SQLite
