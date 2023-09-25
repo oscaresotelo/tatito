@@ -86,36 +86,51 @@
 #     # Cerrar la conexión a la base de datos, independientemente de si se produjo un error o no
 #     if conn:
 #         conn.close()
+# import sqlite3
+
+# # Nombre de la base de datos SQLite
+# database_name = "inventario.db"
+
+# try:
+#     # Conectarse a la base de datos
+#     conn = sqlite3.connect(database_name)
+#     cursor = conn.cursor()
+
+#     # Consulta SQL para obtener el valor actual de ID_Producto
+#     cursor.execute("SELECT MAX(ID_Producto) FROM Productos")
+#     max_id = cursor.fetchone()[0]
+
+#     if max_id is not None:
+#         # Actualizar el campo ID_Producto sumando 1
+#         cursor.execute(f"UPDATE Productos SET ID_Producto = ID_Producto + {max_id + 1}")
+
+#         # Confirmar los cambios en la base de datos
+#         conn.commit()
+
+#         print("Se ha actualizado el campo ID_Producto correctamente.")
+
+#     else:
+#         print("La tabla Productos está vacía.")
+
+# except sqlite3.Error as e:
+#     print("Error al conectar a la base de datos:", e)
+
+# finally:
+#     # Cerrar la conexión a la base de datos, independientemente de si se produjo un error o no
+#     if conn:
+#         conn.close()
 import sqlite3
 
-# Nombre de la base de datos SQLite
-database_name = "inventario.db"
+# Conectarse a la base de datos
+conexion = sqlite3.connect("inventario.db")
+cursor = conexion.cursor()
 
+# Agregar el campo FechaVto de tipo date a la tabla Inventario
 try:
-    # Conectarse a la base de datos
-    conn = sqlite3.connect(database_name)
-    cursor = conn.cursor()
-
-    # Consulta SQL para obtener el valor actual de ID_Producto
-    cursor.execute("SELECT MAX(ID_Producto) FROM Productos")
-    max_id = cursor.fetchone()[0]
-
-    if max_id is not None:
-        # Actualizar el campo ID_Producto sumando 1
-        cursor.execute(f"UPDATE Productos SET ID_Producto = ID_Producto + {max_id + 1}")
-
-        # Confirmar los cambios en la base de datos
-        conn.commit()
-
-        print("Se ha actualizado el campo ID_Producto correctamente.")
-
-    else:
-        print("La tabla Productos está vacía.")
-
+    cursor.execute("ALTER TABLE Inventario ADD COLUMN FechaVto DATE")
+    conexion.commit()
+    print("Campo FechaVto agregado exitosamente.")
 except sqlite3.Error as e:
-    print("Error al conectar a la base de datos:", e)
-
+    print(f"Error al agregar el campo FechaVto: {e}")
 finally:
-    # Cerrar la conexión a la base de datos, independientemente de si se produjo un error o no
-    if conn:
-        conn.close()
+    conexion.close()

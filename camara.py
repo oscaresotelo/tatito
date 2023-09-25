@@ -49,20 +49,33 @@ else :
         cursor.execute("""
             SELECT p.Nombre, r.NombreRubro, p.Precio_Venta
             FROM Productos p
-            INNER JOIN Rubros r ON p.Rubro = r.CodRubro
+            #INNER JOIN Rubros r ON p.Rubro = r.CodRubro
             WHERE p.Codigo=?
         """, (codigo,))
         producto = cursor.fetchone()
         conn.close()
         return producto
 
-    def agregar_producto(codigo, nombre, rubro, subrubro, categoria, descripcion, precio_compra, precio_venta, proveedor, unidad_medida):
+    def agregar_producto(codigo, nombre,  descripcion, precio_compra, precio_venta, proveedor, unidad_medida):
         conn = sqlite3.connect("inventario.db")
         cursor = conn.cursor()
         cursor.execute("""
-            INSERT INTO Productos (Codigo, Nombre, Rubro, Subrubro, Categoria, Descripcion, Precio_Compra, Precio_Venta, Proveedor, Unidad_Medida)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (codigo, nombre, rubro, subrubro, categoria, descripcion, precio_compra, precio_venta, proveedor, unidad_medida))
+            INSERT INTO Productos (Codigo, Nombre,  Descripcion, Precio_Compra, Precio_Venta, Proveedor, Unidad_Medida)
+            VALUES (?, ?, ?, ?, ?, ?, ?, )
+        """, (codigo, nombre,  descripcion, precio_compra, precio_venta, proveedor, unidad_medida))
+        # Actualizar el inventario
+                if tipo_movimiento == 'ENTRADA':
+                    cursor.execute('''
+                        UPDATE Inventario
+                        SET Cantidad_Stock = Cantidad_Stock + ?
+                        WHERE Codigo = ?
+                    ''', (cantidad_movida, id_producto))
+                elif tipo_movimiento == 'SALIDA':
+                    cursor.execute('''
+                        UPDATE Inventario
+                        SET Cantidad_Stock = Cantidad_Stock - ?
+                        WHERE Codigo = ?
+                    ''', (cantidad_movida, id_producto))
         conn.commit()
         conn.close()
 
@@ -103,9 +116,9 @@ else :
             st.write(f"Producto con código {qr_code} no encontrado en la base de datos.")
             st.write("Agregar nuevo producto:")
             nuevo_nombre = st.text_input("Nombre:")
-            nuevo_rubro = st.text_input("Rubro:")
-            nuevo_subrubro = st.text_input("Subrubro:")
-            nueva_categoria = st.text_input("Categoria:")
+            # nuevo_rubro = st.text_input("Rubro:")
+            # nuevo_subrubro = st.text_input("Subrubro:")
+            # nueva_categoria = st.text_input("Categoria:")
             nueva_descripcion = st.text_area("Descripción:")
             nuevo_precio_compra = st.number_input("Precio de Compra:")
             nuevo_precio_venta = st.number_input("Precio de Venta:")
@@ -113,7 +126,7 @@ else :
             nueva_unidad_medida = st.text_input("Unidad de Medida:")
             
             if st.button("Guardar Producto"):
-                agregar_producto(qr_code, nuevo_nombre, nuevo_rubro, nuevo_subrubro, nueva_categoria, nueva_descripcion, nuevo_precio_compra, nuevo_precio_venta, nuevo_proveedor, nueva_unidad_medida)
+                agregar_producto(qr_code, nuevo_nombre,  nueva_descripcion, nuevo_precio_compra, nuevo_precio_venta, nuevo_proveedor, nueva_unidad_medida)
                 st.success(f"Producto con código {qr_code} agregado correctamente.")
     else:
         st.write("Escanea un código QR para buscar un producto.")

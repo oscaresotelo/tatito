@@ -46,22 +46,22 @@ else:
         conn = sqlite3.connect("inventario.db")
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT p.Nombre, r.NombreRubro, p.Precio_Venta
+            SELECT p.Nombre,  p.Precio_Venta, p.Precio_Compra
             FROM Productos p
-            INNER JOIN Rubros r ON p.Rubro = r.CodRubro
+            
             WHERE p.Codigo=?
         """, (codigo,))
         producto = cursor.fetchone()
         conn.close()
         return producto
 
-    def agregar_producto(codigo, nombre, rubro, subrubro, categoria, descripcion, precio_compra, precio_venta, proveedor, unidad_medida):
+    def agregar_producto(codigo, nombre, descripcion, precio_compra, precio_venta, proveedor, unidad_medida):
         conn = sqlite3.connect("inventario.db")
         cursor = conn.cursor()
         cursor.execute("""
-            INSERT INTO Productos (Codigo, Nombre, Rubro, Subrubro, Categoria, Descripcion, Precio_Compra, Precio_Venta, Proveedor, Unidad_Medida)
+            INSERT INTO Productos (Codigo, Nombre,  Descripcion, Precio_Compra, Precio_Venta, Proveedor, Unidad_Medida)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (codigo, nombre, rubro, subrubro, categoria, descripcion, precio_compra, precio_venta, proveedor, unidad_medida))
+        """, (codigo, nombre,  descripcion, precio_compra, precio_venta, proveedor, unidad_medida))
         conn.commit()
         conn.close()
 
@@ -107,8 +107,8 @@ else:
             st.write(qr_code)
             st.write("Datos del producto:")
             st.write(f"Nombre: {producto[0]}")
-            st.write(f"Rubro: {producto[1]}")
-            st.write(f"Precio: {producto[2]}")
+            st.write(f"Precio Venta: {producto[1]}")
+            #st.write(f"Precio Costo: {producto[2]}")
 
             # Formulario para agregar movimiento de inventario
             st.write("Agregar movimiento de inventario:")
@@ -125,9 +125,9 @@ else:
             st.write(f"Producto con código {qr_code} no encontrado en la base de datos.")
             st.write("Agregar nuevo producto:")
             nuevo_nombre = st.text_input("Nombre:")
-            nuevo_rubro = st.text_input("Rubro:")
-            nuevo_subrubro = st.text_input("Subrubro:")
-            nueva_categoria = st.text_input("Categoria:")
+            # nuevo_rubro = st.text_input("Rubro:")
+            # nuevo_subrubro = st.text_input("Subrubro:")
+            # nueva_categoria = st.text_input("Categoria:")
             nueva_descripcion = st.text_area("Descripción:")
             nuevo_precio_compra = st.number_input("Precio de Compra:")
             nuevo_precio_venta = st.number_input("Precio de Venta:")
