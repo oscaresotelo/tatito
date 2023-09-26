@@ -56,8 +56,8 @@ def login():
               Page("inicio.py", "Inicio" ),
               Page("completo.py", "Cargar Movimientos"),
               Page("faltante.py", "Parametros de Productos"),
-              Page("tablero.py", "Tablero de Faltante"),
-              Page("consulta.py", "Consulta de Stock"),
+              Page("tablero.py", "Tablero de Stock"),
+              Page("consulta.py", "Consulta de Movimientos"),
               
 
           ])
