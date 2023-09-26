@@ -7,3 +7,4 @@ enableWebsocketCompression=false
 
 [browser]
 serverPort = 80
+serverAddress = "tatito.dcom.com.ar"
