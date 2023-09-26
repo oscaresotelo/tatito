@@ -159,7 +159,9 @@ else:
 
     # Crear la aplicación Streamlit
     def main():
-        st.markdown("<h1 style='text-align: center'>Tablero de Control</h1>", unsafe_allow_html=True)
+        # st.markdown("<h1 style='text-align: center'>Tablero de Control</h1>", unsafe_allow_html=True)
+        st.title("Tablero de Control")
+        st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 
         # Agregar un control para seleccionar la condición
         condicion = st.radio("Selecciona una condición:", ["Stockeado", "Faltante"])

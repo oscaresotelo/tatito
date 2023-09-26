@@ -42,7 +42,10 @@ if "ingreso" not in st.session_state:
 if st.session_state.ingreso == "":
     st.warning("Por favor Ingrese Correctamente")
 else:
-    st.markdown("<h1 style='text-align: center; color: red;'>Carga de Parametros</h1>", unsafe_allow_html=True)
+    # st.markdown("<h1 style='text-align: center; color: red;'>Carga de Parametros</h1>", unsafe_allow_html=True)
+    st.title("Carga de Parametros")
+    st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
+
     def connect_db():
         return sqlite3.connect('inventario.db')
 
