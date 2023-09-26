@@ -1,11 +1,11 @@
 [server]
-port=8503
-headless=true
-enableCORS=false
-enableXsrfProtection=false
-enableWebsocketCompression=false
+port = 8503
+headless = true
+enableCORS = false
+enableXsrfProtection = false
+enableWebsocketCompression = false
+address = "0.0.0.0"
 
 [browser]
-
+gatherUsageStats = false
 serverAddress = "tatito.dcom.com.ar"
-serverPort = 80
