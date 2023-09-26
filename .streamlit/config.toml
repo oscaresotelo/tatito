@@ -1,1 +1,9 @@
-serverAddress = "tatito.dcom.com.ar"
+[server]
+port=8503
+headless=true
+enableCORS=false
+enableXsrfProtection=false
+enableWebsocketCompression=false
+
+[browser]
+serverPort = 80
