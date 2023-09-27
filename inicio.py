@@ -134,12 +134,16 @@ hide_st_style = """
 st.markdown(hide_st_style, 
 
     unsafe_allow_html=True)
-    
+st.title("Movimiento de Inventario")
+st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)   
 st.markdown(
+   
+
+    
     f"""
     <div class="container">
         <img class="logo-img" src="data:image/png;base64,{base64.b64encode(open(LOGO_IMAGE, "rb").read()).decode()}" > <br>
-        <p class="logo-text">Movimiento <br> de Inventario</p>
+        
     </div>
     """,
     unsafe_allow_html=True
