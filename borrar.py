@@ -119,18 +119,57 @@
 #     # Cerrar la conexión a la base de datos, independientemente de si se produjo un error o no
 #     if conn:
 #         conn.close()
+# import sqlite3
+
+# # Conectarse a la base de datos
+# conexion = sqlite3.connect("inventario.db")
+# cursor = conexion.cursor()
+
+# # Agregar el campo FechaVto de tipo date a la tabla Inventario
+# try:
+#     cursor.execute("ALTER TABLE Inventario ADD COLUMN FechaVto DATE")
+#     conexion.commit()
+#     print("Campo FechaVto agregado exitosamente.")
+# except sqlite3.Error as e:
+#     print(f"Error al agregar el campo FechaVto: {e}")
+# finally:
+#     conexion.close()
 import sqlite3
 
 # Conectarse a la base de datos
 conexion = sqlite3.connect("inventario.db")
 cursor = conexion.cursor()
 
-# Agregar el campo FechaVto de tipo date a la tabla Inventario
-try:
-    cursor.execute("ALTER TABLE Inventario ADD COLUMN FechaVto DATE")
-    conexion.commit()
-    print("Campo FechaVto agregado exitosamente.")
-except sqlite3.Error as e:
-    print(f"Error al agregar el campo FechaVto: {e}")
-finally:
-    conexion.close()
+# Consulta SQL para cambiar el tipo de dato de los campos "Cambio" y "FechaVto"
+consulta = """
+    PRAGMA foreign_keys=off;
+
+    -- Crear una tabla temporal con la nueva estructura
+    CREATE TABLE Temp_Movimiento_Inventario AS
+    SELECT
+        ID_Movimiento,
+        Codigo,
+        Tipo_Movimiento,
+        Cantidad_Movida,
+        Fecha_Hora_Movimiento,
+        Usuario,
+        Razon_Movimiento,
+        CAST(Cambio AS REAL) AS Cambio,  -- Cambiar el tipo de dato a REAL
+        CAST(FechaVto AS DATE) AS FechaVto  -- Cambiar el tipo de dato a DATE
+    FROM Movimiento_Inventario;
+
+    -- Eliminar la tabla original
+    DROP TABLE Movimiento_Inventario;
+
+    -- Renombrar la tabla temporal
+    ALTER TABLE Temp_Movimiento_Inventario RENAME TO Movimiento_Inventario;
+
+    PRAGMA foreign_keys=on;
+"""
+
+# Ejecutar la consulta
+cursor.executescript(consulta)
+
+# Confirmar los cambios y cerrar la conexión
+conexion.commit()
+conexion.close()

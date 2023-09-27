@@ -60,19 +60,19 @@ else:
         cursor = conn.cursor()
         cursor.execute("""
             INSERT INTO Productos (Codigo, Nombre,  Descripcion, Precio_Compra, Precio_Venta, Proveedor, Unidad_Medida)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?,?)
         """, (codigo, nombre,  descripcion, precio_compra, precio_venta, proveedor, unidad_medida))
         conn.commit()
         conn.close()
 
-    def agregar_movimiento_inventario(codigo, tipo_movimiento, cantidad_movida, usuario, razon_movimiento):
+    def agregar_movimiento_inventario(codigo, tipo_movimiento, cantidad_movida, usuario, razon_movimiento, fechavto):
         conn = sqlite3.connect("inventario.db")
         cursor = conn.cursor()
         fecha_hora_movimiento = datetime.datetime.now()
         cursor.execute("""
-            INSERT INTO Movimientos_Inventario (Codigo, Tipo_Movimiento, Cantidad_Movida, Fecha_Hora_Movimiento, Usuario, Razon_Movimiento)
-            VALUES (?, ?, ?, ?, ?, ?)
-        """, (codigo, tipo_movimiento, cantidad_movida, fecha_hora_movimiento, usuario, razon_movimiento))
+            INSERT INTO Movimiento_Inventario (Codigo, Tipo_Movimiento, Cantidad_Movida, Fecha_Hora_Movimiento, Usuario, Razon_Movimiento,FechaVto)
+            VALUES (?, ?, ?, ?, ?, ?,?)
+        """, (codigo, tipo_movimiento, cantidad_movida, fecha_hora_movimiento, usuario, razon_movimiento,fechavto))
         conn.commit()
         conn.close()
 
@@ -116,9 +116,9 @@ else:
             cantidad_movida = st.number_input("Cantidad Movida:", min_value=1)
             usuario = st.text_input("Usuario:")
             razon_movimiento = st.text_area("Razón del Movimiento:")
-            
+            fecha_vencimiento = st.date_input("Ingrese Fecha Vencimiento")
             if st.button("Guardar Movimiento"):
-                agregar_movimiento_inventario(qr_code, tipo_movimiento, cantidad_movida, usuario, razon_movimiento)
+                agregar_movimiento_inventario(qr_code, tipo_movimiento, cantidad_movida, usuario, razon_movimiento,fecha_vencimiento)
                 st.success("Movimiento de inventario registrado correctamente.")
 
         else:
@@ -133,9 +133,10 @@ else:
             nuevo_precio_venta = st.number_input("Precio de Venta:")
             nuevo_proveedor = st.text_input("Proveedor:")
             nueva_unidad_medida = st.text_input("Unidad de Medida:")
+            fecha_vencimiento = st.date_input("Ingrese Fecha Vencimiento")
             
             if st.button("Guardar Producto"):
-                agregar_producto(qr_code, nuevo_nombre, nuevo_rubro, nuevo_subrubro, nueva_categoria, nueva_descripcion, nuevo_precio_compra, nuevo_precio_venta, nuevo_proveedor, nueva_unidad_medida)
+                agregar_producto(qr_code, nuevo_nombre,  nueva_descripcion, nuevo_precio_compra, nuevo_precio_venta, nuevo_proveedor, nueva_unidad_medida)
                 st.success(f"Producto con código {qr_code} agregado correctamente.")
     else:
         st.write("Escanea un código QR para buscar un producto.")
