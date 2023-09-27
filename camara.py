@@ -3,7 +3,8 @@ import streamlit as st
 import sqlite3
 from streamlit_qrcode_scanner import qrcode_scanner
 import datetime
-
+st.title("Registro de Movimientos de Inventario")
+st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
@@ -31,8 +32,7 @@ def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 local_css("estilos.css")    
-st.title("Registro de Movimientos de Inventario")
-st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
+
 
 # st.markdown("<h1 style='text-align: center; color: red;'>Registro de Movimientos de Inventario</h1>", unsafe_allow_html=True)
 # Función para buscar en la base de datos
