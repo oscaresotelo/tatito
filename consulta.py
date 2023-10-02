@@ -51,12 +51,12 @@ def consulta_entre_fechas(fecha_inicio, fecha_fin, tipo_movimiento):
 st.title("Consulta de Stock")
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 # Formulario de consulta
-st.sidebar.header('Filtros')
-fecha_inicio = st.sidebar.date_input('Fecha de inicio')
-fecha_fin = st.sidebar.date_input('Fecha de fin')
-tipo_movimiento = st.sidebar.selectbox('Tipo de Movimiento', ['Entrada', 'Salida'])
 
-if st.sidebar.button('Consultar'):
+fecha_inicio = st.date_input('Fecha de inicio')
+fecha_fin = st.date_input('Fecha de fin')
+tipo_movimiento = st.selectbox('Tipo de Movimiento', ['Entrada', 'Salida'])
+
+if st.button('Consultar'):
     if fecha_inicio <= fecha_fin:
         data = consulta_entre_fechas(fecha_inicio, fecha_fin, tipo_movimiento)
         if len(data) > 0:

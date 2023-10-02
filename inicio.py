@@ -66,6 +66,7 @@ def login(user):
               Page("faltante.py", "Parametros de Productos"),
               Page("tablero.py", "Tablero de Stock"),
               Page("consulta.py", "Consulta de Movimientos"),
+              Page("actualizarmedidas.py", "Actualizar Productos"),
           ])
     
 # Create the login form
