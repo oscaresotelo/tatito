@@ -134,42 +134,57 @@
 #     print(f"Error al agregar el campo FechaVto: {e}")
 # finally:
 #     conexion.close()
+# import sqlite3
+
+# # Conectarse a la base de datos
+# conexion = sqlite3.connect("inventario.db")
+# cursor = conexion.cursor()
+
+# # Consulta SQL para cambiar el tipo de dato de los campos "Cambio" y "FechaVto"
+# consulta = """
+#     PRAGMA foreign_keys=off;
+
+#     -- Crear una tabla temporal con la nueva estructura
+#     CREATE TABLE Temp_Movimiento_Inventario AS
+#     SELECT
+#         ID_Movimiento,
+#         Codigo,
+#         Tipo_Movimiento,
+#         Cantidad_Movida,
+#         Fecha_Hora_Movimiento,
+#         Usuario,
+#         Razon_Movimiento,
+#         CAST(Cambio AS REAL) AS Cambio,  -- Cambiar el tipo de dato a REAL
+#         CAST(FechaVto AS DATE) AS FechaVto  -- Cambiar el tipo de dato a DATE
+#     FROM Movimiento_Inventario;
+
+#     -- Eliminar la tabla original
+#     DROP TABLE Movimiento_Inventario;
+
+#     -- Renombrar la tabla temporal
+#     ALTER TABLE Temp_Movimiento_Inventario RENAME TO Movimiento_Inventario;
+
+#     PRAGMA foreign_keys=on;
+# """
+
+# # Ejecutar la consulta
+# cursor.executescript(consulta)
+
+# # Confirmar los cambios y cerrar la conexión
+# conexion.commit()
+# conexion.close()
 import sqlite3
 
 # Conectarse a la base de datos
 conexion = sqlite3.connect("inventario.db")
 cursor = conexion.cursor()
 
-# Consulta SQL para cambiar el tipo de dato de los campos "Cambio" y "FechaVto"
-consulta = """
-    PRAGMA foreign_keys=off;
+# Actualizar los registros vacíos en "Precio_Compra" y "Precio_Venta"
+query = "UPDATE productos SET Precio_Compra = 1.0, Precio_Venta = 1.0 WHERE Precio_Compra IS NULL OR Precio_Venta IS NULL"
+cursor.execute(query)
 
-    -- Crear una tabla temporal con la nueva estructura
-    CREATE TABLE Temp_Movimiento_Inventario AS
-    SELECT
-        ID_Movimiento,
-        Codigo,
-        Tipo_Movimiento,
-        Cantidad_Movida,
-        Fecha_Hora_Movimiento,
-        Usuario,
-        Razon_Movimiento,
-        CAST(Cambio AS REAL) AS Cambio,  -- Cambiar el tipo de dato a REAL
-        CAST(FechaVto AS DATE) AS FechaVto  -- Cambiar el tipo de dato a DATE
-    FROM Movimiento_Inventario;
-
-    -- Eliminar la tabla original
-    DROP TABLE Movimiento_Inventario;
-
-    -- Renombrar la tabla temporal
-    ALTER TABLE Temp_Movimiento_Inventario RENAME TO Movimiento_Inventario;
-
-    PRAGMA foreign_keys=on;
-"""
-
-# Ejecutar la consulta
-cursor.executescript(consulta)
-
-# Confirmar los cambios y cerrar la conexión
+# Guardar los cambios en la base de datos
 conexion.commit()
+
+# Cerrar la conexión
 conexion.close()
