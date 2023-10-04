@@ -58,17 +58,30 @@ def local_css(file_name):
 def login(user):
     st.session_state.ingreso = "ok"
     if user[2] == 1:  # Si el nivel del usuario es 1
+
         enviarmail()
-    st.success("Bienvenido!")
-    show_pages([
-              Page("inicio.py", "Inicio" ),
-              Page("completo.py", "Cargar Movimientos"),
-              Page("faltante.py", "Parametros de Productos"),
-              Page("tablero.py", "Tablero de Stock"),
-              Page("consulta.py", "Consulta de Movimientos"),
-              Page("actualizarmedidas.py", "Actualizar Productos"),
-          ])
-    
+        st.success("Bienvenido!")
+        show_pages([
+                  Page("inicio.py", "Inicio" ),
+                  Page("completo.py", "Cargar Movimientos"),
+                  Page("faltante.py", "Parametros de Productos"),
+                  Page("actmanual.py", "Carga Manual Parametros"),
+                  Page("tablero.py", "Tablero de Stock"),
+                  Page("consulta.py", "Consulta de Movimientos"),
+                  Page("actualizarmedidas.py", "Actualizar Productos"),
+              ])
+    else:
+        st.success("Bienvenido!")
+        show_pages([
+                  Page("inicio.py", "Inicio" ),
+                  Page("completo.py", "Cargar Movimientos"),
+                  Page("faltante.py", "Parametros de Productos"),
+                  Page("actmanual.py", "Carga Manual Parametros"),
+                  Page("actualizarmedidas.py", "Actualizar Productos"),
+              ])
+
+
+
 # Create the login form
 
 if st.session_state.ingreso == "ok":

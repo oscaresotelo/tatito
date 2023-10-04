@@ -180,7 +180,7 @@ conexion = sqlite3.connect("inventario.db")
 cursor = conexion.cursor()
 
 # Actualizar los registros vacíos en "Precio_Compra" y "Precio_Venta"
-query = "UPDATE productos SET Precio_Compra = 1.0, Precio_Venta = 1.0 WHERE Precio_Compra IS NULL OR Precio_Venta IS NULL"
+query = "UPDATE productos SET Cantidad_Medida = 1.0 WHERE Cantidad_Medida IS NULL "
 cursor.execute(query)
 
 # Guardar los cambios en la base de datos

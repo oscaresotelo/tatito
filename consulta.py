@@ -124,33 +124,38 @@ def consulta_entre_fechas(fecha_inicio, fecha_fin, tipo_movimiento):
 # Encabezado de la aplicación
 st.title("Consulta de Stock")
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
+if "ingreso" not in st.session_state:
+    st.session_state.ingreso = ""
 
-# Formulario de consulta
-fecha_inicio = st.date_input('Fecha de inicio')
-fecha_fin = st.date_input('Fecha de fin')
-tipo_movimiento = st.selectbox('Tipo de Movimiento', ['Entrada', 'Salida'])
+if st.session_state.ingreso == "":
+    st.warning("Por favor Ingrese Correctamente")
+else:
+    # Formulario de consulta
+    fecha_inicio = st.date_input('Fecha de inicio')
+    fecha_fin = st.date_input('Fecha de fin')
+    tipo_movimiento = st.selectbox('Tipo de Movimiento', ['Entrada', 'Salida'])
 
-if st.button('Consultar'):
-    if fecha_inicio <= fecha_fin:
-        data = consulta_entre_fechas(fecha_inicio, fecha_fin, tipo_movimiento)
-        if len(data) > 0:
-            st.write('Resultados de la consulta:')
-            df = pd.DataFrame(data, columns=['Tipo_Movimiento', 'Cantidad_Movida', 'Nombre', 'Fecha_Hora_Movimiento', 'Razon_Movimiento'])
-            df['Fecha_Hora_Movimiento'] = pd.to_datetime(df['Fecha_Hora_Movimiento'])
-            df['Fecha_Hora_Movimiento'] = df['Fecha_Hora_Movimiento'].dt.strftime('%d/%m/%Y')  # Cambio del formato de la fecha
-            st.dataframe(df)
+    if st.button('Consultar'):
+        if fecha_inicio <= fecha_fin:
+            data = consulta_entre_fechas(fecha_inicio, fecha_fin, tipo_movimiento)
+            if len(data) > 0:
+                st.write('Resultados de la consulta:')
+                df = pd.DataFrame(data, columns=['Tipo_Movimiento', 'Cantidad_Movida', 'Nombre', 'Fecha_Hora_Movimiento', 'Razon_Movimiento'])
+                df['Fecha_Hora_Movimiento'] = pd.to_datetime(df['Fecha_Hora_Movimiento'])
+                df['Fecha_Hora_Movimiento'] = df['Fecha_Hora_Movimiento'].dt.strftime('%d/%m/%Y')  # Cambio del formato de la fecha
+                st.dataframe(df)
 
-            # Agrega esta parte para mostrar el DataFrame agrupado por "Nombre" y "Fecha_Hora_Movimiento"
-            st.subheader('Productos por Fecha y Nombre')
-            grouped_df = df.groupby(['Nombre', 'Fecha_Hora_Movimiento'])['Cantidad_Movida'].sum().reset_index()
-            st.dataframe(grouped_df)
+                # Agrega esta parte para mostrar el DataFrame agrupado por "Nombre" y "Fecha_Hora_Movimiento"
+                st.subheader('Productos por Fecha y Nombre')
+                grouped_df = df.groupby(['Nombre', 'Fecha_Hora_Movimiento'])['Cantidad_Movida'].sum().reset_index()
+                st.dataframe(grouped_df)
 
-            fig = px.bar(df, x='Fecha_Hora_Movimiento', y='Cantidad_Movida', title='Cantidad movida por fecha')
-            st.plotly_chart(fig)
+                fig = px.bar(df, x='Fecha_Hora_Movimiento', y='Cantidad_Movida', title='Cantidad movida por fecha')
+                st.plotly_chart(fig)
+            else:
+                st.warning('No se encontraron resultados para los filtros seleccionados.')
         else:
-            st.warning('No se encontraron resultados para los filtros seleccionados.')
-    else:
-        st.error('La fecha de inicio debe ser anterior a la fecha de fin.')
+            st.error('La fecha de inicio debe ser anterior a la fecha de fin.')
 
-# Cierre de la conexión a la base de datos
-conn.close()
+    # Cierre de la conexión a la base de datos
+    conn.close()
