@@ -64,7 +64,7 @@ def login(user):
         show_pages([
                   Page("inicio.py", "Inicio" ),
                   Page("completo.py", "Cargar Movimientos"),
-                  Page("faltante.py", "Parametros de Productos"),
+                  Page("faltante.py", "Carga Aviso Faltante"),
                   Page("actmanual.py", "Carga Manual Parametros"),
                   Page("tablero.py", "Tablero de Stock"),
                   Page("consulta.py", "Consulta de Movimientos"),
@@ -75,7 +75,7 @@ def login(user):
         show_pages([
                   Page("inicio.py", "Inicio" ),
                   Page("completo.py", "Cargar Movimientos"),
-                  Page("faltante.py", "Parametros de Productos"),
+                  Page("faltante.py", "Carga Aviso Faltante"),
                   Page("actmanual.py", "Carga Manual Parametros"),
                   Page("actualizarmedidas.py", "Actualizar Productos"),
               ])
