@@ -77,7 +77,7 @@ def login(user):
                   Page("completo.py", "Cargar Movimientos"),
                   Page("faltante.py", "Carga Aviso Faltante"),
                   Page("actmanual.py", "Carga Manual Parametros"),
-                  Page("actualizarmedidas.py", "Actualizar Productos"),
+                  Page("actualizarmedidas.py", "Carga Parametros Cantidad Productos"),
               ])
 
 
