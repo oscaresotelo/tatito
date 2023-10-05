@@ -91,7 +91,7 @@ else:
                 st.write(f"Precio Venta: {producto[1]}")
                 st.write(f"Precio Compra: {producto[2]}")
 
-    faltante = st.number_input("Ingrese el valor del Parametro:", min_value=0, step=1)
+    faltante = st.number_input("Ingrese Valor para Aviso de Faltante:", min_value=0, step=1)
 
     # Botón para actualizar el campo Faltante en la tabla Inventario
     if st.button("Actualizar Parametros"):
