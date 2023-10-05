@@ -173,18 +173,33 @@
 # # Confirmar los cambios y cerrar la conexión
 # conexion.commit()
 # conexion.close()
+# import sqlite3
+
+# # Conectarse a la base de datos
+# conexion = sqlite3.connect("inventario.db")
+# cursor = conexion.cursor()
+
+# # Actualizar los registros vacíos en "Precio_Compra" y "Precio_Venta"
+# query = "UPDATE productos SET Cantidad_Medida = 1.0 WHERE Cantidad_Medida IS NULL "
+# cursor.execute(query)
+
+# # Guardar los cambios en la base de datos
+# conexion.commit()
+
+# # Cerrar la conexión
+# conexion.close()
+
 import sqlite3
 
-# Conectarse a la base de datos
-conexion = sqlite3.connect("inventario.db")
+# Conectar a la base de datos SQLite
+conexion = sqlite3.connect('inventario.db')
 cursor = conexion.cursor()
 
-# Actualizar los registros vacíos en "Precio_Compra" y "Precio_Venta"
-query = "UPDATE productos SET Cantidad_Medida = 1.0 WHERE Cantidad_Medida IS NULL "
-cursor.execute(query)
+# Borrar todos los datos de la tabla "Inventario"
+cursor.execute('DELETE FROM Movimiento_Inventario')
 
-# Guardar los cambios en la base de datos
+# Confirmar los cambios y cerrar la conexión
 conexion.commit()
-
-# Cerrar la conexión
 conexion.close()
+
+print("Todos los datos de la tabla Inventario han sido eliminados.")
