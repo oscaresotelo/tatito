@@ -43,7 +43,7 @@ if st.session_state.ingreso == "":
     st.warning("Por favor Ingrese Correctamente")
 else:
     # st.markdown("<h1 style='text-align: center; color: red;'>Carga de Parametros</h1>", unsafe_allow_html=True)
-    st.title("Carga de Parametros")
+    st.title("Parametros Faltantes")
     st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 
     def connect_db():
@@ -69,9 +69,9 @@ else:
         conn = sqlite3.connect("inventario.db")
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT p.Nombre, r.NombreRubro, p.Precio_Venta
+            SELECT p.Nombre, p.Precio_Venta,p.Precio_Compra
             FROM Productos p
-            INNER JOIN Rubros r ON p.Rubro = r.CodRubro
+            
             WHERE p.Codigo=?
         """, (codigo,))
         producto = cursor.fetchone()
@@ -88,8 +88,8 @@ else:
                 st.write(qr_code)
                 st.write("Datos del producto:")
                 st.write(f"Nombre: {producto[0]}")
-                st.write(f"Rubro: {producto[1]}")
-                st.write(f"Precio: {producto[2]}")
+                st.write(f"Precio Venta: {producto[1]}")
+                st.write(f"Precio Compra: {producto[2]}")
 
     faltante = st.number_input("Ingrese el valor del Parametro:", min_value=0, step=1)
 

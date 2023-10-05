@@ -70,7 +70,7 @@ else:
             proveedor = st.text_input('Proveedor:', producto[9])
             unidadmedida = st.text_input('Unidad de Medida:', producto[10])
             idproducto = st.text_input('ID Producto Nuevo:', producto[11])
-            cantidadmedida = st.text_input('Cantidad de Medida:', producto[12])
+            cantidadmedida = st.text_input('Cantidad Por Medida:', producto[12])
                 
             if st.button('Actualizar'):
                 actualizar_producto(producto[1], nombre, rubro, subrubro, categoria, descripcion, preciocompra, precioventa, proveedor, unidadmedida, idproducto, cantidadmedida)
