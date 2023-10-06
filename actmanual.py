@@ -1,7 +1,5 @@
 import streamlit as st
 import sqlite3
-import pandas as pd
-
 hide_st_style = """
 <style>
 #MainMenu {visibility: hidden;}
@@ -28,57 +26,41 @@ def local_css(file_name):
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 local_css("estilos.css")
-
-# Función para conectar a la base de datos SQLite
-def connect_db():
-    conn = sqlite3.connect('inventario.db')
-    return conn
+# Conexión a la base de datos SQLite
+conn = sqlite3.connect('inventario.db')
+cursor = conn.cursor()
 
 # Función para buscar productos por nombre
-def search_product_by_name(conn, nombre):
-    query = f"SELECT * FROM Productos WHERE Nombre LIKE '%{nombre}%'"
-    result = pd.read_sql(query, conn)
-    return result
+def buscar_productos_por_nombre(nombre):
+    cursor.execute("SELECT Codigo, Nombre FROM Productos WHERE Nombre LIKE ?", ('%' + nombre + '%',))
+    return cursor.fetchall()
 
-# Función para actualizar la cantidad y unidad de medida de un producto
-def update_product(conn, codigo, cantidad, unidad_medida):
-    query = f"UPDATE Productos SET Cantidad_Medida = {cantidad}, Unidad_Medida = '{unidad_medida}' WHERE Codigo = {codigo}"
-    conn.execute(query)
+# Función para actualizar la cantidad de stock
+def actualizar_cantidad_stock(codigo, nueva_cantidad):
+    cursor.execute("UPDATE Inventario SET Cantidad_Stock = ? WHERE Codigo = ?", (nueva_cantidad, codigo))
     conn.commit()
 
-def main():
-    st.title("Gestión de Inventario")
+# Configuración de la aplicación Streamlit
+st.title("Actualizar Cantidad de Stock")
 
-    # Conectar a la base de datos
-    conn = connect_db()
+# Formulario para buscar productos
+nombre_producto = st.text_input("Ingrese el nombre del producto:")
+if nombre_producto:
+    productos_encontrados = buscar_productos_por_nombre(nombre_producto)
+    if productos_encontrados:
+        st.write("Productos encontrados:")
+        for producto in productos_encontrados:
+            st.write(f"Código: {producto[0]}, Nombre: {producto[1]}")
 
-    # Barra lateral para búsqueda por nombre
-    st.header("Búsqueda por Nombre")
-    nombre_busqueda = st.text_input("Ingrese el nombre del producto:")
+        # Selección del producto a actualizar
+        producto_seleccionado = st.selectbox("Seleccione un producto para actualizar:", [str(producto[0]) for producto in productos_encontrados])
+        
+        # Formulario para actualizar la cantidad de stock
+        nueva_cantidad = st.number_input("Nueva cantidad de stock:")
+        if st.button("Actualizar Cantidad de Stock"):
+            if producto_seleccionado:
+                actualizar_cantidad_stock(producto_seleccionado, nueva_cantidad)
+                st.success("Cantidad de stock actualizada con éxito.")
 
-    if nombre_busqueda:
-        # Realizar la búsqueda
-        results = search_product_by_name(conn, nombre_busqueda)
-
-        if not results.empty:
-            st.header("Resultados de la búsqueda:")
-            st.dataframe(results)
-
-            # Seleccionar un producto para modificar
-            selected_index = st.selectbox("Seleccione un producto para modificar:", results.index)
-            if selected_index  >= 0:
-                cantidad = st.number_input("Nueva Cantidad:", value=int(results.at[selected_index, 'Cantidad_Medida']))
-                unidad_medida = st.text_input("Nueva Unidad de Medida:", value=results.at[selected_index, 'Unidad_Medida'])
-
-                if st.button("Modificar Producto"):
-                    
-
-                    # Actualizar el producto
-                    update_product(conn, results.at[selected_index, 'Codigo'], cantidad, unidad_medida)
-                    st.success("Producto modificado con éxito.")
-
-
-    conn.close()
-
-if __name__ == '__main__':
-    main()
+# Cerrar la conexión a la base de datos al finalizar
+conn.close()

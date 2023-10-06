@@ -65,39 +65,7 @@ else:
         conn.commit()
         conn.close()
 
-    # def agregar_movimiento_inventario(codigo, tipo_movimiento, cantidad_movida, usuario, razon_movimiento, fechavto):
-    #     conn = sqlite3.connect("inventario.db")
-    #     cursor = conn.cursor()
-    #     fecha_hora_movimiento = datetime.datetime.now()
-    #     cursor.execute("""
-    #         INSERT INTO Movimiento_Inventario (Codigo, Tipo_Movimiento, Cantidad_Movida, Fecha_Hora_Movimiento, Usuario, Razon_Movimiento,FechaVto)
-    #         VALUES (?, ?, ?, ?, ?, ?,?)
-    #     """, (codigo, tipo_movimiento, cantidad_movida, fecha_hora_movimiento, usuario, razon_movimiento,fechavto))
-    #     conn.commit()
-    #     conn.close()
-
-    #     # Actualizar la tabla "Inventario"
-    #     conn_inventario = sqlite3.connect("inventario.db")
-    #     cursor_inventario = conn_inventario.cursor()
-
-    #     # Buscar el código en la tabla "Inventario"
-    #     cursor_inventario.execute("SELECT * FROM Inventario WHERE Codigo=?", (codigo,))
-    #     row = cursor_inventario.fetchone()
-
-    #     if row is None:
-    #         # Si no existe el código, insertarlo en la tabla "Inventario"
-    #         cursor_inventario.execute("INSERT INTO Inventario (Codigo, Cantidad_Stock, Fecha_Actualizacion) VALUES (?, ?, ?)", (codigo, 0, datetime.datetime.now()))
-    #         conn_inventario.commit()
-
-    #     # Sumar al campo Cantidad_Stock si el Tipo_Movimiento es "Entrada"
-    #     if tipo_movimiento == "Entrada":
-    #         cursor_inventario.execute("UPDATE Inventario SET Cantidad_Stock = Cantidad_Stock + ?, Fecha_Actualizacion = ? WHERE Codigo = ?", (cantidad_movida, datetime.datetime.now(), codigo))
-    #         conn_inventario.commit()
-    #     if tipo_movimiento == "Salida":
-    #         cursor_inventario.execute("UPDATE Inventario SET Cantidad_Stock = Cantidad_Stock - ?, Fecha_Actualizacion = ? WHERE Codigo = ?", (cantidad_movida, datetime.datetime.now(), codigo))
-    #         conn_inventario.commit()
-
-    #     conn_inventario.close()
+    
     def agregar_movimiento_inventario(codigo, tipo_movimiento, cantidad_movida, usuario, razon_movimiento, fechavto):
         if tipo_movimiento == "Entrada":
             conn = sqlite3.connect("inventario.db")

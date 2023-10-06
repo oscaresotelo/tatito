@@ -65,7 +65,7 @@ def login(user):
                   Page("inicio.py", "Inicio" ),
                   Page("completo.py", "Cargar Movimientos"),
                   Page("faltante.py", "Carga Aviso Faltante"),
-                  Page("actmanual.py", "Carga Manual Parametros"),
+                  Page("actmanual.py", "Correccion de Stock"),
                   Page("tablero.py", "Tablero de Stock"),
                   Page("consulta.py", "Consulta de Movimientos"),
                   Page("actualizarmedidas.py", "Actualizar Productos"),
@@ -76,7 +76,7 @@ def login(user):
                   Page("inicio.py", "Inicio" ),
                   Page("completo.py", "Cargar Movimientos"),
                   Page("faltante.py", "Carga Aviso Faltante"),
-                  Page("actmanual.py", "Carga Manual Parametros"),
+                  Page("actmanual.py", "Correccion de Stock"),
                   Page("actualizarmedidas.py", "Carga Parametros Cantidad Productos"),
               ])
 
