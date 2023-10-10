@@ -189,17 +189,53 @@
 # # Cerrar la conexión
 # conexion.close()
 
+# import sqlite3
+
+# # Conectar a la base de datos SQLite
+# conexion = sqlite3.connect('inventario.db')
+# cursor = conexion.cursor()
+
+# # Borrar todos los datos de la tabla "Inventario"
+# cursor.execute('DELETE FROM Movimiento_Inventario')
+
+# # Confirmar los cambios y cerrar la conexión
+# conexion.commit()
+# conexion.close()
+
+# print("Todos los datos de la tabla Inventario han sido eliminados.")
+
 import sqlite3
+import csv
 
-# Conectar a la base de datos SQLite
-conexion = sqlite3.connect('inventario.db')
-cursor = conexion.cursor()
+# Conectarse a la base de datos
+conn = sqlite3.connect('inventario.db')
+cursor = conn.cursor()
 
-# Borrar todos los datos de la tabla "Inventario"
-cursor.execute('DELETE FROM Movimiento_Inventario')
+# Consulta SQL para obtener los datos necesarios
+query = """
+    SELECT MI.*, P.Nombre
+    FROM Movimiento_Inventario AS MI
+    JOIN Productos AS P ON MI.Codigo = P.Codigo
+    WHERE MI.Tipo_Movimiento = 'Salida'
+"""
 
-# Confirmar los cambios y cerrar la conexión
-conexion.commit()
-conexion.close()
+# Ejecutar la consulta
+cursor.execute(query)
 
-print("Todos los datos de la tabla Inventario han sido eliminados.")
+# Obtener todos los registros
+rows = cursor.fetchall()
+
+# Cerrar la conexión a la base de datos
+conn.close()
+
+# Exportar los datos a un archivo CSV con codificación utf-8
+with open('movimiento_salida.csv', 'w', newline='', encoding='utf-8') as csv_file:
+    csv_writer = csv.writer(csv_file)
+    
+    # Escribir encabezados
+    csv_writer.writerow([i[0] for i in cursor.description])
+    
+    # Escribir los datos
+    csv_writer.writerows(rows)
+
+print("Los datos se han exportado correctamente a movimiento_salida.csv")

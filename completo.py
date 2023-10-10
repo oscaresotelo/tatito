@@ -3,6 +3,14 @@ import sqlite3
 from streamlit_qrcode_scanner import qrcode_scanner
 import datetime
 
+
+
+if "user" not in st.session_state:
+    st.session_state.user = ""
+    st.write("Sin Usuario")
+else:
+    st.write("Usuario: " + str(st.session_state.user))
+
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
@@ -104,9 +112,7 @@ else:
             if tipo_movimiento == "Entrada":
                 cursor_inventario.execute("UPDATE Inventario SET Cantidad_Stock = Cantidad_Stock + ?, Fecha_Actualizacion = ? WHERE Codigo = ?", (cantidad_movida_total, datetime.datetime.now(), codigo))
                 conn_inventario.commit()
-            # if tipo_movimiento == "Salida":
-            #     cursor_inventario.execute("UPDATE Inventario SET Cantidad_Stock = Cantidad_Stock - ?, Fecha_Actualizacion = ? WHERE Codigo = ?", (cantidad_movida_total, datetime.datetime.now(), codigo))
-            #     conn_inventario.commit()
+            
 
             conn_inventario.close()
         else:

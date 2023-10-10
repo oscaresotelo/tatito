@@ -34,7 +34,12 @@ local_css("estilos.css")
 
 
 # Función para conectar a la base de datos SQLite
+if "user" not in st.session_state:
+    st.session_state = ""
+    st.write("Usuario Incorrecto")
 
+else:
+    st.write("Usuario: " + str(st.session_state.user))
 if "ingreso" not in st.session_state:
       st.session_state.ingreso = ""
 

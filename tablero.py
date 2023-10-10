@@ -43,6 +43,8 @@ def highlight_blue(val):
 # Conexión a la base de datos SQLite
 conn = sqlite3.connect('inventario.db')
 cursor = conn.cursor()
+if "user" not in st.session_state:
+	st.session_state = ""
 
 if "ingreso" not in st.session_state:
     st.session_state.ingreso = ""
@@ -111,6 +113,8 @@ else:
 
     # Crear la aplicación Streamlit
     def main():
+        
+        usuario = st.write("Usuario: " + str(st.session_state.user))
         # st.markdown("<h1 style='text-align: center'>Tablero de Control</h1>", unsafe_allow_html=True)
         st.title("Tablero de Control")
         st.markdown('<style>div.block-container{padding-top:1rem;}</style>', unsafe_allow_html=True)

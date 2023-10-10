@@ -19,6 +19,16 @@ header {visibility: hidden;}
 }
 </style>
 """
+if "user" not in st.session_state:
+    st.session_state.user = ""
+    st.write("usuario incorrecto")
+else:
+    st.write(st.session_state.user)
+if "ingreso" not in st.session_state:
+    st.session_state.ingreso = ""
+
+if st.session_state.ingreso == "":
+    st.warning("Por favor Ingrese Correctamente")
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 def local_css(file_name):

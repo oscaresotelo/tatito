@@ -46,6 +46,11 @@ def actualizar_producto(codigo, nombre, rubro, subrubro, categoria, descripcion,
     conn.commit()
 
 st.title('Actualización de Productos')
+if "user" not in st.session_state:
+    st.session_state.user = ""
+    st.write("Sin Usuario")
+else:
+    st.write("Usuario: " + str(st.session_state.user))
 if "ingreso" not in st.session_state:
     st.session_state.ingreso = ""
 
