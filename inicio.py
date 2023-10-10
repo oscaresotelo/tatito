@@ -183,6 +183,7 @@ def login(user):
             Page("tablero.py", "Tablero de Stock"),
             Page("consulta.py", "Consulta de Movimientos"),
             Page("actualizarmedidas.py", "Actualizar Productos"),
+            Page("actualizarprecios.py", "Actualizar Precios"),
         ])
     else:
         st.success("Bienvenido!")

@@ -74,7 +74,7 @@ else:
         conn.close()
 
     
-    def agregar_movimiento_inventario(codigo, tipo_movimiento, cantidad_movida, usuario, razon_movimiento, fechavto):
+    def agregar_movimiento_inventario(codigo, tipo_movimiento, cantidad_movida, ubicacion_almacen, razon_movimiento, fechavto):
         if tipo_movimiento == "Entrada":
             conn = sqlite3.connect("inventario.db")
             cursor = conn.cursor()
@@ -89,7 +89,7 @@ else:
             cantidad_movida_total = cantidad_movida * cantidad_medida_producto
 
             cursor.execute("""
-                INSERT INTO Movimiento_Inventario (Codigo, Tipo_Movimiento, Cantidad_Movida, Fecha_Hora_Movimiento, Usuario, Razon_Movimiento,FechaVto)
+                INSERT INTO Movimiento_Inventario (Codigo, Tipo_Movimiento, Cantidad_Movida, Fecha_Hora_Movimiento, usuario, Razon_Movimiento,FechaVto)
                 VALUES (?, ?, ?, ?, ?, ?,?)
             """, (codigo, tipo_movimiento, cantidad_movida_total, fecha_hora_movimiento, usuario, razon_movimiento,fechavto))
             conn.commit()
@@ -120,7 +120,7 @@ else:
             cursor = conn.cursor()
             fecha_hora_movimiento = datetime.datetime.now()
             cursor.execute("""
-                INSERT INTO Movimiento_Inventario (Codigo, Tipo_Movimiento, Cantidad_Movida, Fecha_Hora_Movimiento, Usuario, Razon_Movimiento,FechaVto)
+                INSERT INTO Movimiento_Inventario (Codigo, Tipo_Movimiento, Cantidad_Movida, Fecha_Hora_Movimiento, usuario, Razon_Movimiento,FechaVto)
                 VALUES (?, ?, ?, ?, ?, ?,?)
             """, (codigo, tipo_movimiento, cantidad_movida, fecha_hora_movimiento, usuario, razon_movimiento,fechavto))
             conn.commit()
@@ -164,8 +164,8 @@ else:
             st.write("Agregar movimiento de inventario:")
             tipo_movimiento = st.selectbox("Tipo de Movimiento", ["Entrada", "Salida"])
             cantidad_movida = st.number_input("Cantidad Movida:", min_value=1)
-            usuario = st.text_input("Usuario:")
-            razon_movimiento = st.text_area("Razón del Movimiento:")
+            usuario = st.text_input("usuario:")
+            razon_movimiento = st.text_area("Ubicacion Mercaderia:")
             fecha_vencimiento = st.date_input("Ingrese Fecha Vencimiento")
             if st.button("Guardar Movimiento"):
                 agregar_movimiento_inventario(qr_code, tipo_movimiento, cantidad_movida, usuario, razon_movimiento,fecha_vencimiento)
