@@ -81,7 +81,7 @@ else:
                 grouped_df = df.groupby(['Nombre', 'Fecha_Hora_Movimiento'])['Cantidad_Movida'].sum().reset_index()
                 st.dataframe(grouped_df)
 
-                fig = px.bar(df, x='Fecha_Hora_Movimiento', y='Cantidad_Movida', title='Cantidad movida por fecha')
+                fig = px.bar(df, x='Nombre', y='Cantidad_Movida', title='Cantidad movida por fecha')
                 st.plotly_chart(fig)
             else:
                 st.warning('No se encontraron resultados para los filtros seleccionados.')

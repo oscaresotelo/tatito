@@ -163,15 +163,15 @@ st.markdown(
 
 if "ingreso" not in st.session_state:
     st.session_state.ingreso = ""
-if "username" not in st.session_state:
-    st.session_state.username = ""
+# if "username" not in st.session_state:
+#     st.session_state.username = ""
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 def login(user):
     st.session_state.ingreso = "ok"
-    st.write(st.session_state.user)
+    # st.write(st.session_state.user)
     if user[2] == 1:  # Si el nivel del usuario es 1
         enviarmail()
         st.success("Bienvenido!")
@@ -216,7 +216,7 @@ else:
         # If the username and password are valid, log the user in
         if user is not None:
             
-            st.session_state.user = username
+            # st.session_state.user = username
 
             login(user)
             placeholder.empty()
