@@ -57,11 +57,11 @@ header {visibility: hidden;}
 </style>
 """
 
-if "user" not in st.session_state:
-    st.session_state.user = ""
-    st.write("usuario incorrecto")
-else:
-    st.write(st.session_state.user)
+# if "user" not in st.session_state:
+#     st.session_state.user = ""
+#     st.write("usuario incorrecto")
+# else:
+#     st.write(st.session_state.user)
 
 if "ingreso" not in st.session_state:
     st.session_state.ingreso = ""

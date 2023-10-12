@@ -53,7 +53,7 @@ def consulta_entre_fechas(fecha_inicio, fecha_fin, tipo_movimiento):
 
 # Encabezado de la aplicación
 st.title("Consulta de Stock")
-st.write("Usuario: " + str(st.session_state.user))
+#st.write("Usuario: " + str(st.session_state.user))
 st.markdown('<style>div.block-container{padding-top:1rem;}</style>',unsafe_allow_html=True)
 if "ingreso" not in st.session_state:
     st.session_state.ingreso = ""
