@@ -330,7 +330,7 @@ local_css("estilos.css")
 
 # Ejecutar la consulta SQL
 if st.session_state.ingreso == "ok":
-    st.header("Consulta de Movimientos")
+    st.header("Articulos en Falta")
     st.write("Datos de la consulta:")
     c.execute("""
         SELECT Inventario.Cantidad_Stock, Inventario.Faltante, Productos.Nombre, Inventario.Fecha_Actualizacion
